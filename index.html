@@ -70,18 +70,23 @@
             border: 1px solid var(--glass-border); border-radius: 30px; padding: 30px; 
             display: flex; flex-direction: column; position: relative; overflow: hidden; 
             transform-style: preserve-3d;
-            /* ЭМБИЕНТ ПОДСВЕТКА: Базовая тень + легкий фиолетовый блюр 100px */
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 100px rgba(196, 113, 237, 0.03);
             transition: border-color 0.4s ease, box-shadow 0.4s ease; 
         }
         
         .bento-box:hover { 
             border-color: rgba(255, 255, 255, 0.2); 
-            /* ЭМБИЕНТ ПРИ НАВЕДЕНИИ: Разгорается сильнее */
             box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 100px rgba(196, 113, 237, 0.15);
         }
         
         .tilt-content { transform: translateZ(30px); width: 100%; height: 100%; display: flex; flex-direction: column; }
+
+        /* --- РАСКЛАДКА КОНТЕНТА ВНУТРИ TILT (ЗАМЕНА INLINE СТИЛЕЙ) --- */
+        .contact .tilt-content, .location .tilt-content, .tech .tilt-content { justify-content: center; align-items: center; }
+        .works .tilt-content, .feedback .tilt-content { flex-direction: row; justify-content: space-between; align-items: center; }
+        .stats .tilt-content { flex-direction: row; justify-content: space-around; align-items: center; }
+        .playing .tilt-content { flex-direction: row; align-items: center; gap: 25px; }
+        .works-links { display: flex; gap: 15px; }
 
         .hero { grid-column: span 2; grid-row: span 2; justify-content: flex-end; position: relative; background: rgba(0,0,0,0.4); backdrop-filter: none; -webkit-backdrop-filter: none; padding: 0; }
         .hero-bg-photo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.85; }
@@ -95,10 +100,10 @@
         .social-link:hover { border-color: var(--accent-1); color: var(--accent-1); box-shadow: 0 5px 15px rgba(18, 194, 233, 0.3); }
 
         .location { grid-column: span 1; grid-row: span 1; justify-content: center; text-align: center; }
-        .works { grid-column: span 2; grid-row: span 1; justify-content: space-between; flex-direction: row; align-items: center;}
+        .works { grid-column: span 2; grid-row: span 1; }
         .tech { grid-column: span 2; grid-row: span 1; justify-content: center; }
-        .playing { grid-column: span 2; grid-row: span 1; justify-content: center; cursor: pointer; }
-        .stats { grid-column: span 4; grid-row: span 1; display: flex; flex-direction: row; justify-content: space-around; align-items: center; text-align: center; }
+        .playing { grid-column: span 2; grid-row: span 1; cursor: pointer; }
+        .stats { grid-column: span 4; grid-row: span 1; text-align: center; }
 
         .album-art { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; position: relative; animation: spin 5s linear infinite; box-shadow: 0 0 20px rgba(0,0,0,0.6); flex-shrink: 0; animation-play-state: paused; }
         .is-playing .album-art { animation-play-state: running; }
@@ -117,7 +122,7 @@
         .marquee-wrapper:hover .marquee-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; -webkit-text-stroke: 0px transparent; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .feedback { grid-column: span 4; grid-row: span 1; display: flex; flex-direction: row; align-items: center; justify-content: space-between; }
+        .feedback { grid-column: span 4; grid-row: span 1; }
         .status-dot { width: 10px; height: 10px; background-color: #00ff88; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
 
@@ -134,52 +139,50 @@
         .stat-item h2 { font-size: 4rem; line-height: 1; }
         .italic-serif { font-style: italic; font-weight: 700; }
 
-        /* === ГРАДИЕНТ С АНИМАЦИЕЙ БЛИКА === */
         .gradient-text { 
-            background: linear-gradient(
-                -45deg, 
-                var(--accent-1) 0%, 
-                var(--accent-2) 40%, 
-                #ffffff 50%, 
-                var(--accent-2) 60%, 
-                var(--accent-3) 100%
-            );
-            background-size: 300%;
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            animation: shine 6s linear infinite;
+            background: linear-gradient( -45deg, var(--accent-1) 0%, var(--accent-2) 40%, #ffffff 50%, var(--accent-2) 60%, var(--accent-3) 100% );
+            background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 6s linear infinite;
         }
-        @keyframes shine {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes shine { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .btn { padding: 15px 30px; background: var(--gradient); border: none; border-radius: 50px; color: white; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.1rem; display: inline-block; transition: 0.3s; text-decoration: none;}
 
         #canvas-container { position: absolute; top: -20%; right: -20%; width: 130%; height: 130%; z-index: 3; pointer-events: none; mix-blend-mode: screen; }
 
-        .work-item { background: rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 20px; text-decoration: none; color: white; border: 1px solid transparent; transition: 0.3s; font-family: 'Outfit', sans-serif; position: relative; z-index: 10; }
+        .work-item { background: rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 20px; text-decoration: none; color: white; border: 1px solid transparent; transition: 0.3s; font-family: 'Outfit', sans-serif; position: relative; z-index: 10; display: block; text-align: center;}
         .work-item:hover { border-color: var(--accent-1); background: rgba(18, 194, 233, 0.1); }
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;}
+        .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px;}
         .tag { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem;}
 
+        /* === АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ === */
         @media (max-width: 1024px) {
-            .bento-container { grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(220px, auto); }
+            .bento-container { grid-template-columns: repeat(2, 1fr); }
             .hero, .works, .tech, .playing, .stats, .feedback { grid-column: span 2; }
             .contact, .location { grid-column: span 1; }
-            .works { flex-direction: column; align-items: flex-start; gap: 20px;}
         }
+
+        /* === АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ (ФИКС ВЫХОДА ЗА КРАЯ) === */
         @media (max-width: 600px) {
-            .bento-container { grid-template-columns: 1fr; grid-auto-rows: minmax(220px, auto); }
-            .bento-box { padding: 25px 20px; }
+            .bento-container { grid-template-columns: 1fr; }
+            .bento-box { padding: 25px 20px; transform: none !important; } /* Отключаем 3D наклон для плавности и фикса краев */
+            
             .hero, .works, .contact, .location, .tech, .playing, .stats, .feedback { grid-column: span 1; }
-            .stats { flex-direction: column; gap: 30px; }
-            .feedback { flex-direction: column; text-align: center; gap: 20px; }
+            
+            /* Переопределяем расположение контента внутри карточек строго в колонку */
+            .works .tilt-content, .stats .tilt-content, .feedback .tilt-content, .playing .tilt-content { 
+                flex-direction: column; text-align: center; justify-content: center; gap: 20px;
+            }
+            
+            /* Обертка ссылок тоже должна переноситься */
+            .works-links { flex-wrap: wrap; justify-content: center; width: 100%;}
+            .work-item { width: 100%; } /* Кнопки проектов на всю ширину на мобилке */
+
+            /* Уменьшаем размер огромных цифр в статистике, чтобы не налезали друг на друга */
+            .stat-item h2 { font-size: 2.5rem; }
+            
             h1 { font-size: 2.5rem; }
             .custom-cursor, .project-preview { display: none; } 
             .marquee-text { font-size: 2.5rem; }
-            .bento-box { transform: none !important; } 
         }
     </style>
 </head>
@@ -203,7 +206,7 @@
         </div>
 
         <div class="bento-box contact" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-            <div class="tilt-content" style="justify-content: center; align-items: center;">
+            <div class="tilt-content">
                 <h2 class="gradient-text italic-serif">Let's Talk</h2>
                 <p style="margin-bottom: 10px;">momeht1x@gmail.com</p>
                 <div class="social-icons">
@@ -222,7 +225,7 @@
         </div>
 
         <a href="https://maps.app.goo.gl/r6QGB8GvwN58HhBw5" target="_blank" class="bento-box location" style="text-decoration: none;" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-            <div class="tilt-content" style="justify-content: center; align-items: center;">
+            <div class="tilt-content">
                 <div style="font-size: 2.5rem; margin-bottom: 5px;">🌍</div>
                 <h2 class="italic-serif" style="color: #fff;">Bordeaux, FR</h2>
                 <div style="display: flex; align-items: center; justify-content: center; margin-top: 8px;">
@@ -232,25 +235,22 @@
             </div>
         </a>
 
-       <div class="bento-box works" id="works" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
-            <div class="tilt-content" style="flex-direction: row; justify-content: space-between; align-items: center;">
+        <div class="bento-box works" id="works" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+            <div class="tilt-content">
                 <div><h2 class="italic-serif">Selected Works</h2><p>Recent projects.</p></div>
-                <div style="display: flex; gap: 15px;">
-                    
+                <div class="works-links">
                     <a href="https://momeht1.github.io/website/" target="_blank" class="work-item hover-target" data-image="puritoit-preview.jpg">
                         <strong>PuriToit</strong>
                     </a>
-                    
                     <a href="https://momeht1.github.io/GraffWeb/" target="_blank" class="work-item hover-target" data-image="graffweb-preview.jpg">
                         <strong>GraffWeb</strong>
                     </a>
-                    
                 </div>
             </div>
         </div>
 
         <div class="bento-box tech" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
-            <div class="tilt-content" style="justify-content: center;">
+            <div class="tilt-content">
                 <h2 class="italic-serif">Core Skills</h2>
                 <div class="tags">
                     <span class="tag" style="display: flex; align-items: center; gap: 6px;">
@@ -280,7 +280,7 @@
 
         <div class="bento-box playing hover-target" id="music-player" data-tilt data-tilt-max="4" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
             <audio id="bg-music" src="Starboy.mp3" loop></audio>
-            <div class="tilt-content" style="display: flex; flex-direction: row; align-items: center; gap: 25px;">
+            <div class="tilt-content">
                 <div class="album-art">
                     <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200" alt="Starboy">
                     <div class="vinyl-hole"></div>
@@ -294,7 +294,7 @@
         </div>
 
         <div class="bento-box stats" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
-            <div class="tilt-content" style="flex-direction: row; justify-content: space-around; align-items: center;">
+            <div class="tilt-content">
                 <div class="stat-item"><h2 class="gradient-text">100%</h2><p>Satisfaction</p></div>
                 <div class="stat-item"><h2 class="gradient-text">20+</h2><p>Projects</p></div>
                 <div class="stat-item"><h2 class="gradient-text">Premium</h2><p>Quality</p></div>
@@ -311,7 +311,7 @@
 
     <footer class="bento-container">
         <div class="bento-box feedback" id="feedback" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
-            <div class="tilt-content" style="flex-direction: row; justify-content: space-between; align-items: center;">
+            <div class="tilt-content">
                 <div><h2 class="italic-serif">Ready to elevate your digital presence?</h2><p>I'll get back to you within 24 hours.</p></div>
                 <div class="magnetic-btn-wrap" style="padding: 20px;">
                     <a href="https://t.me/GraffNow" target="_blank" class="btn magnetic-btn">
@@ -324,7 +324,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // --- ПРЕЛОАДЕР ---
             const preloader = document.querySelector('.preloader');
             const counter = document.querySelector('.preloader-counter');
             let progress = 0;
@@ -344,12 +343,10 @@
                 } else { counter.innerHTML = progress + '%'; }
             }, 120);
 
-            // --- ПЛАВНЫЙ СКРОЛЛ ---
             const lenis = new Lenis({ duration: 1.2, smooth: true });
             function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
             requestAnimationFrame(raf);
 
-            // --- КУРСОР И HOVER REVEAL ---
             const cursor = document.querySelector('.custom-cursor');
             const projectPreview = document.querySelector('.project-preview');
             const hoverTargets = document.querySelectorAll('.hover-target, .social-link, .btn');
@@ -376,7 +373,6 @@
                 });
             });
 
-            // --- ЛОГИКА МАГНИТНЫХ КНОПОК ---
             const magneticWraps = document.querySelectorAll('.magnetic-btn-wrap');
             magneticWraps.forEach(wrap => {
                 const btn = wrap.querySelector('.magnetic-btn');
@@ -391,7 +387,6 @@
                 });
             });
 
-            // --- MUSIC PLAYER ---
             const musicPlayer = document.getElementById('music-player');
             const audio = document.getElementById('bg-music');
             if(musicPlayer) musicPlayer.addEventListener('click', () => {
@@ -399,7 +394,6 @@
                 else { audio.pause(); musicPlayer.classList.remove('is-playing'); }
             });
 
-            // --- 3D SCENE ---
             const container = document.getElementById('canvas-container');
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -437,10 +431,6 @@
                 renderer.setSize(container.clientWidth, container.clientHeight);
                 composer.setSize(container.clientWidth, container.clientHeight);
             });
-        });
-    </script>
-</body>
-</html>
         });
     </script>
 </body>
