@@ -81,12 +81,12 @@
         
         .tilt-content { transform: translateZ(30px); width: 100%; height: 100%; display: flex; flex-direction: column; }
 
-        /* --- РАСКЛАДКА КОНТЕНТА ВНУТРИ TILT (ЗАМЕНА INLINE СТИЛЕЙ) --- */
+        /* РАСКЛАДКА КОНТЕНТА */
         .contact .tilt-content, .location .tilt-content, .tech .tilt-content { justify-content: center; align-items: center; }
         .works .tilt-content, .feedback .tilt-content { flex-direction: row; justify-content: space-between; align-items: center; }
         .stats .tilt-content { flex-direction: row; justify-content: space-around; align-items: center; }
         .playing .tilt-content { flex-direction: row; align-items: center; gap: 25px; }
-        .works-links { display: flex; gap: 15px; }
+        .works-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-end; }
 
         .hero { grid-column: span 2; grid-row: span 2; justify-content: flex-end; position: relative; background: rgba(0,0,0,0.4); backdrop-filter: none; -webkit-backdrop-filter: none; padding: 0; }
         .hero-bg-photo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.85; }
@@ -126,7 +126,7 @@
         .status-dot { width: 10px; height: 10px; background-color: #00ff88; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
 
-        /* === ТИПОГРАФИКА: КОНТРАСТ И ИЕРАРХИЯ === */
+        /* === ТИПОГРАФИКА === */
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 10px; }
         h2 { font-size: 2rem; font-weight: 700; margin-bottom: 5px;}
@@ -149,37 +149,26 @@
 
         #canvas-container { position: absolute; top: -20%; right: -20%; width: 130%; height: 130%; z-index: 3; pointer-events: none; mix-blend-mode: screen; }
 
-        .work-item { background: rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 20px; text-decoration: none; color: white; border: 1px solid transparent; transition: 0.3s; font-family: 'Outfit', sans-serif; position: relative; z-index: 10; display: block; text-align: center;}
+        .work-item { background: rgba(255,255,255,0.05); padding: 12px 20px; border-radius: 20px; text-decoration: none; color: white; border: 1px solid transparent; transition: 0.3s; font-family: 'Outfit', sans-serif; position: relative; z-index: 10; display: block; text-align: center;}
         .work-item:hover { border-color: var(--accent-1); background: rgba(18, 194, 233, 0.1); }
         .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px;}
         .tag { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem;}
 
-        /* === АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ === */
+        /* АДАПТИВНОСТЬ */
         @media (max-width: 1024px) {
             .bento-container { grid-template-columns: repeat(2, 1fr); }
             .hero, .works, .tech, .playing, .stats, .feedback { grid-column: span 2; }
             .contact, .location { grid-column: span 1; }
         }
 
-        /* === АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ (ФИКС ВЫХОДА ЗА КРАЯ) === */
         @media (max-width: 600px) {
             .bento-container { grid-template-columns: 1fr; }
-            .bento-box { padding: 25px 20px; transform: none !important; } /* Отключаем 3D наклон для плавности и фикса краев */
-            
+            .bento-box { padding: 25px 20px; transform: none !important; } 
             .hero, .works, .contact, .location, .tech, .playing, .stats, .feedback { grid-column: span 1; }
-            
-            /* Переопределяем расположение контента внутри карточек строго в колонку */
-            .works .tilt-content, .stats .tilt-content, .feedback .tilt-content, .playing .tilt-content { 
-                flex-direction: column; text-align: center; justify-content: center; gap: 20px;
-            }
-            
-            /* Обертка ссылок тоже должна переноситься */
-            .works-links { flex-wrap: wrap; justify-content: center; width: 100%;}
-            .work-item { width: 100%; } /* Кнопки проектов на всю ширину на мобилке */
-
-            /* Уменьшаем размер огромных цифр в статистике, чтобы не налезали друг на друга */
+            .works .tilt-content, .stats .tilt-content, .feedback .tilt-content, .playing .tilt-content { flex-direction: column; text-align: center; justify-content: center; gap: 20px; }
+            .works-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 10px;}
+            .work-item { width: 100%; }
             .stat-item h2 { font-size: 2.5rem; }
-            
             h1 { font-size: 2.5rem; }
             .custom-cursor, .project-preview { display: none; } 
             .marquee-text { font-size: 2.5rem; }
@@ -245,6 +234,9 @@
                     <a href="https://momeht1.github.io/GraffWeb/" target="_blank" class="work-item hover-target" data-image="graffweb-preview.jpg">
                         <strong>GraffWeb</strong>
                     </a>
+                    <a href="https://mcpons.github.io/mariecarolinelpons/index.html" target="_blank" class="work-item hover-target" data-image="mcpons-preview.jpg">
+                        <strong>Marie-Caroline</strong>
+                    </a>
                 </div>
             </div>
         </div>
@@ -255,7 +247,6 @@
                 <div class="tags">
                     <span class="tag" style="display: flex; align-items: center; gap: 6px;">
                         <svg width="14" height="14" viewBox="0 0 384 512" fill="#E34F26"><path d="M0 32l34.9 395.8L191.5 480l157.6-52.2L384 32H0zm308.2 127.9H124.4l4.1 49.4h175.6l-13.6 148.4-97.9 27v.3h-1.1l-98.7-27.3-6-75.8h47.7L138 320l53.5 14.5 53.7-14.5 6-62.2H84.3L71.5 112.2h241.1l-4.4 47.7z"/></svg>
-                        <svg width="14" height="14" viewBox="0 0 384 512" fill="#1572B6"><path d="M0 32l34.9 395.8L192 480l157.1-52.2L384 32H0zm308.2 127.9H124.4l4.1 49.4h175.6l-13.6 148.4-97.9 27v.3h-1.1l-98.7-27.3-6-75.8h47.7L138 320l53.5 14.5 53.7-14.5 6-62.2H84.3L71.5 112.2h241.1l-4.4 47.7z"/></svg>
                         HTML/CSS
                     </span>
                     <span class="tag" style="display: flex; align-items: center; gap: 6px;">
